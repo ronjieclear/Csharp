@@ -1,0 +1,50 @@
+//Global Variables
+        string filepath = "C:/CsharpProjects/"; //your file path
+        string filename = "data.txt";  //your file.txt
+        
+//File Open Button      
+            if(File.Exists(filepath+filename))
+            {
+                MessageBox.Show("File Exists!");
+            }
+            else
+            {
+                MessageBox.Show("File not Found!");
+                //To create file
+                File.Create(filepath + filename);
+                MessageBox.Show("file Created!");
+            }
+
+//Read File
+            using (StreamReader SR = new StreamReader(filepath + filename))
+            {
+                string line;
+                while ((line = SR.ReadLine()) !=null)
+                {
+                    MessageBox.Show(line);
+                }
+            }
+//Add Text Button
+            //Write text to a file Way 1
+            StreamWriter SW = File.AppendText(filepath + filename);
+            SW.WriteLine(txt_char.Text);
+            SW.Dispose();
+            SW.Close();
+
+            //Write text to a file Way 2
+            using (StreamWriter SW = File.AppendText(filepath + filename))
+            {
+                SW.WriteLine(txt_char.Text);
+            }
+            
+//Erase content
+            //Confirmation
+            if(
+                MessageBox.Show("Erase all content?","Erase",
+                MessageBoxButtons.YesNo,MessageBoxIcon.Exclamation)
+                ==DialogResult.Yes
+                )
+            {
+                //To erase all content
+                File.WriteAllText(filepath + filename, string.Empty);
+            }
