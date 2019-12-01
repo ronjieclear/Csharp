@@ -1,0 +1,68 @@
+//Array Creation - Global Variables
+string[] studentname = new string[0];
+int currentindex = 0;
+        
+//Add Button
+  Array.Resize(ref studentname, studentname.Length + 1);
+  //this will retrieve the text in the textbox and save to the array
+  studentname[studentname.Length - 1] = txt_name.Text;
+  txt_name.Text = "";//just to clear the textbox
+  MessageBox.Show("Record Created!");
+       
+//First Record Button
+  txt_name.Text = studentname[0];
+  currentindex = 0;
+
+//Previous Record Button
+  if(currentindex>0)
+  {
+    currentindex--;
+    txt_name.Text = studentname[currentindex];
+  }
+
+//Next Record Button
+  if(currentindex<studentname.Length-1)
+  {
+    currentindex++;
+    txt_name.Text = studentname[currentindex];
+  }
+  
+//Last Record Button
+            txt_name.Text = studentname[studentname.Length - 1];
+            currentindex = studentname.Length - 1;
+            //we need to -1 because the index starts at 0
+            
+            
+//update Button
+            studentname[currentindex] = txt_name.Text;
+            MessageBox.Show("Record Updated!");
+            
+//Delete Button
+            //We will use LINQ for two liner array update
+            //LINQ - Language Integrated Query
+            studentname[currentindex] = "";//make the record blank
+            //this will remove the null or empty values in the array
+            studentname = studentname.Where(i => !string.IsNullOrEmpty(i)).ToArray();
+            txt_name.Text = "";
+            MessageBox.Show("Record Deleted!");
+            
+//Search Button
+            string searchword = txt_name.Text;
+            int result = -1;//this will hold the index number of the found record
+            for (int i=0; i<studentname.Length;i++)
+            {
+                if(searchword==studentname[i])
+                {
+                    result = i;
+                }
+            }
+            //show result
+            if (result>-1)
+            {
+                MessageBox.Show("Record Found in index "+result);
+                currentindex = result;//so that we are navigated to the result
+            }
+            else
+            {
+                MessageBox.Show("Record not Found!");
+            }
